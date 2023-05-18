@@ -10,19 +10,21 @@ int blueFrequency = 0; // the amount of blue color
 
 void setup() { // run only once
   // Setting the outputs - set s0, s1, s2,s3 as the output of the colorsensor
-  pinMode(S0, OUTPUT);
-  pinMode(S1, OUTPUT);
-  pinMode(S2, OUTPUT);
-  pinMode(S3, OUTPUT);
+  pinMode(S0, INPUT);
+  pinMode(S1, INPUT);
+  pinMode(S2, INPUT);
+  pinMode(S3, INPUT);
 
   // set the sensorOut as input
   pinMode(sensorOut, INPUT);
   // Begins serial communication - the speed of the communication
-  Serial.begin(4800);
+  Serial.begin(9600);
+
 
 }
 
 void loop() { // run repeatedly
+
   // Setting RED (R) filtered photodiodes to be read
   digitalWrite(S2,LOW);
   digitalWrite(S3,LOW);
