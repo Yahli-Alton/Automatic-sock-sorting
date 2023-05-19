@@ -4,6 +4,7 @@
 #define S3 7
 #define sensorOut 8
 
+
 int redFrequency = 0; // The amount of red color
 int greenFrequency = 0; // The amount of green color
 int blueFrequency = 0; // the amount of blue color
@@ -36,10 +37,13 @@ void loop() { // run repeatedly
   
   // Reading the output frequency
   redFrequency = pulseIn(sensorOut, LOW);
-  red = map(redFrequency, 25,72,255,0);
+  red = map(redFrequency, 3,30,255,0);
+  // red = red * 1.5 - 127;
+  if (red > 255) red = 255;
+  if (red < 0) red = 0;
    // Printing the RED (R) value
-  Serial.print("R = ");
-  Serial.print(red);
+  // Serial.print("R = ");
+  Serial.print(redFrequency);
   delay(100);
   
   // Setting GREEN (G) filtered photodiodes to be read
@@ -48,11 +52,14 @@ void loop() { // run repeatedly
   
   // Reading the output frequency
   greenFrequency = pulseIn(sensorOut, LOW);
-  green = map(greenFrequency, 30,90,255,0);
+  green = map(greenFrequency, 4, 40, 255,0);
+  // green = green * 1.5 - 127;
+  if (green > 255) green = 255;
+  if (green < 0) green = 0;
   // green = map(greenFrequency, 25,70,255,0);
   // Printing the GREEN (G) value  
-  Serial.print(" G = ");
-  Serial.print(green);
+  Serial.print(",");
+  Serial.print(greenFrequency);
   delay(100);
  
   // Setting BLUE (B) filtered photodiodes to be read
@@ -61,18 +68,23 @@ void loop() { // run repeatedly
   
   // Reading the output frequency
   blueFrequency = pulseIn(sensorOut, LOW);
-  blue = map(blueFrequency, 25,70,255,0);
+  blue = map(blueFrequency, 3,40,255,0);
+  // blue = blue * 1.5 - 127;
+  if (blue > 255) blue = 255;
+  if (blue < 0) blue = 0;
   // Printing the BLUE (B) value 
-  Serial.print(" B = ");
-  Serial.print(blue);
+  Serial.print(",");
+  Serial.print(blueFrequency);
   delay(100);
 
   // if (blue > 280) Serial.print(" Blue");
   // if (red > 280) Serial.print(" Red");
-  if (blue > red && blue > green) Serial.print(" Blue");
-  if (red > blue && red > green) Serial.print(" Red");
-  if (green > red && green > blue) Serial.print(" Green");
 
-  Serial.println();
 
+  // if (blue > red && blue > green) Serial.print(" Blue");
+  // if (red > blue && red > green) Serial.print(" Red");
+  // if (green > red && green > blue) Serial.print(" Green");
+
+  Serial.println();  
 }
+
