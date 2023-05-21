@@ -4,13 +4,13 @@
 #define S3 7
 #define sensorOut 8
 
-extern int const arrayLength = 5;
+extern int const arrayLength = 7;
 
 int const max_color_count = 3;
 
-int const red_different = 4;
+int const red_different = 6;
 int const green_different = 4;
-int const blue_different = 4;
+int const blue_different = 3;
 
 int redFrequency = 0; // The amount of red color
 int greenFrequency = 0; // The amount of green color
@@ -113,9 +113,9 @@ int check_for_sock() {
   if (started_counting) {
     if (colors_equels(tempColor, color)) {
       color_count++;
-      // Serial.print("counting: ");
-      // Serial.print(color_count);
-      // Serial.print(" ");
+    //   Serial.print("counting: ");
+    //   Serial.print(color_count);
+    //   Serial.print(" ");
     } else {
       color_count = 0;
       started_counting = false;
@@ -129,10 +129,10 @@ int check_for_sock() {
       if (colors_equels(colors[j], color)) {
         color_count = 0;
         started_counting = false;
-        Serial.println("");
-        Serial.print("RETURN: ");
-        Serial.print(j);
-        Serial.println("");
+        // Serial.println("");
+        // Serial.print("RETURN: ");
+        // Serial.print(j);
+        // Serial.println("");
         return j;
       }
     }
