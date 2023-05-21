@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 import serial
 import time
 PRECENT = 0.1
+COLOR_RANGE = 20
 """
 arduino = serial.Serial(port='COM5', baudrate=9600, timeout=.1)
 def write_read(x):
@@ -50,14 +51,58 @@ def dominant_color():
         return color
 
 if __name__ == "__main__":
-    vid = cv2.VideoCapture(1)
+    vid = cv2.VideoCapture(0)
     while True:
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         ret, frame = vid.read()
         color = dominant_color()
-        mask = cv2.inRange(frame, (color[0],color[1],color[2]), (item + 10 for item in color))
-        cv2.imshow("Mask Applied to Image", mask)
+        print(color)
+        mask = cv2.inRange(frame, np.array((color[0] - COLOR_RANGE,color[1] - COLOR_RANGE,color[2] - COLOR_RANGE)), np.array((color[0] + COLOR_RANGE,color[1] + COLOR_RANGE,color[2] + COLOR_RANGE)))
+
+        edges = cv2.Canny(mask, 100, 200)
+
+        # Define the structuring element for morphological operations
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15,15))  # Adjust the kernel size as needed
+
+        # Perform iterative morphological closing to fill holes
+        # num_iterations = 50  # Adjust the number of iterations as needed
+        # closed = edges
+        # for _ in range(num_iterations):
+        #     closed = cv2.morphologyEx(closed, cv2.MORPH_CLOSE, kernel)
+
+        closed = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
+
+        # kernel = np.ones((5, 5), np.uint8)
+        # erosion = cv2.erode(mask, kernel, iterations=1)
+        # img_dilation = cv2.dilate(erosion, kernel, iterations=1)
+
+
+        # Apply morphological opening to remove noise
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))  # Adjust kernel size as needed
+        opened = closed
+        # for i in range(5):
+        #     opened = cv2.morphologyEx(closed, cv2.MORPH_OPEN, kernel)
+
+        # Find contours of the filtered region
+        contours, _ = cv2.findContours(opened, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        if (len(contours)) == 0:
+            cv2.imshow("Mask Applied to Image", opened)
+            cv2.imshow("image", frame)
+            continue
+
+        # Find the largest contour (assuming it corresponds to the desired object)
+        largest_contour = max(contours, key=lambda c: cv2.arcLength(c, True))
+
+        # Find the bounding box of the object
+        x, y, width, height = cv2.boundingRect(largest_contour)
+
+        # Draw a red rectangle around the object
+        cv2.rectangle(frame, (x, y), (x + width, y + height), (0, 0, 255), 2)
+
+        cv2.imshow("Mask Applied to Image", opened)
+        cv2.imshow("image", frame)
 
 	# BGR
     # pink_mask = cv2.inRange(frame, (30, 30, 90), (90, 90, 255))
