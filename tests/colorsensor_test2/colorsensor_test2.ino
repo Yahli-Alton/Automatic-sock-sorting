@@ -39,19 +39,6 @@ void set(int color1[3], int color2[3]) {
 }
 
 boolean colors_equels(int color1[3], int color2[3]) {
-  // Serial.print("color 1: ");
-  // Serial.print(color1[0]);
-  // Serial.print(",");
-  // Serial.print(color1[1]);
-  // Serial.print(",");
-  // Serial.print(color1[2]);
-  // Serial.print(" - color 2: ");
-  // Serial.print(color2[0]);
-  // Serial.print(",");
-  // Serial.print(color2[1]);
-  // Serial.print(",");
-  // Serial.print(color2[2]);
-  // Serial.print(" : ");
   return abs(color1[0] - color2[0]) < red_different && abs(color1[1] - color2[1]) < green_different && abs(color1[2] - color2[2]) < blue_different;
 }
 
@@ -74,8 +61,6 @@ void setup() { // run only once
 
 void loop() { // run repeatedly
   // Setting RED (R) filtered photodiodes to be read
-  test();
-  Serial.print("h");
   digitalWrite(S2,LOW);
   digitalWrite(S3,LOW);
   
