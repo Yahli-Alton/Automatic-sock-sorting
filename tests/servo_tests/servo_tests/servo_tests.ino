@@ -1,21 +1,63 @@
-// Include the Servo library 
-#include <Servo.h> 
-// Declare the Servo pin 
-int servoPin = 3; 
-// Create a servo object 
-Servo Servo1; 
-void setup() { 
-   // We need to attach the servo to the used pin number 
-   Servo1.attach(servoPin); 
+#include <Servo.h>
+
+
+Servo bottomServo;
+
+int frequency = 0;
+int color=0;
+
+void setup() {
+  
+  bottomServo.attach(3);
+
+  Serial.begin(9600);
+  
+    color=1;
+  
+
+
+
+   switch (color) {
+  case 1:
+   bottomServo.writeMicroseconds(1000);
+    delay(1000);
+  bottomServo.writeMicroseconds(1500);
+    break;
+
+     case 2:
+    bottomServo.writeMicroseconds(1000);
+     delay(1000);
+  bottomServo.writeMicroseconds(1500);
+     break;
+
+     case 3:
+      bottomServo.writeMicroseconds(1000);
+       delay(1000);
+  bottomServo.writeMicroseconds(1500);
+    break;
+
+     case 4:
+     bottomServo.writeMicroseconds(1000);
+      delay(1000);
+  bottomServo.writeMicroseconds(1500);
+     break;
+
+     case 5:
+      bottomServo.writeMicroseconds(1000);
+       delay(1000);
+  bottomServo.writeMicroseconds(1500);
+    break;
+
+     case 6:
+      bottomServo.writeMicroseconds(1000);
+       delay(1000);
+  bottomServo.writeMicroseconds(1500);
+     break;
+    
+     case 0:
+     break;
+  }
 }
-void loop(){ 
-   // Make servo go to 0 degrees 
-   Servo1.write(0); 
-   delay(1000); 
-   // Make servo go to 90 degrees 
-   Servo1.write(90); 
-   delay(1000); 
-   // Make servo go to 180 degrees 
-   Servo1.write(180); 
-   delay(1000); 
-}
+
+void loop() {}
+
