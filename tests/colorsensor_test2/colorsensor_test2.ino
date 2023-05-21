@@ -4,13 +4,11 @@
 #define S3 7
 #define sensorOut 8
 
-
 int redFrequency = 0; // The amount of red color
 int greenFrequency = 0; // The amount of green color
 int blueFrequency = 0; // the amount of blue color
 
 // create new array of length 5
-int const arrayLength = 5;
 
 int colors[arrayLength][3];
 
@@ -20,7 +18,6 @@ int tempColor[3];
 
 int color_count = 0;
 
-int const max_color_count = 5;
 
 boolean started_counting = false;
 boolean was_default_color_before = true;
@@ -35,10 +32,6 @@ int red = 0;
 int blue = 0;
 int green = 0;
 
-int const red_different = 4;
-int const green_different = 4;
-int const blue_different = 4;
-
 void set(int color1[3], int color2[3]) {
   color1[0] = color2[0];
   color1[1] = color2[1];
@@ -46,19 +39,19 @@ void set(int color1[3], int color2[3]) {
 }
 
 boolean colors_equels(int color1[3], int color2[3]) {
-  Serial.print("color 1: ");
-  Serial.print(color1[0]);
-  Serial.print(",");
-  Serial.print(color1[1]);
-  Serial.print(",");
-  Serial.print(color1[2]);
-  Serial.print(" - color 2: ");
-  Serial.print(color2[0]);
-  Serial.print(",");
-  Serial.print(color2[1]);
-  Serial.print(",");
-  Serial.print(color2[2]);
-  Serial.print(" : ");
+  // Serial.print("color 1: ");
+  // Serial.print(color1[0]);
+  // Serial.print(",");
+  // Serial.print(color1[1]);
+  // Serial.print(",");
+  // Serial.print(color1[2]);
+  // Serial.print(" - color 2: ");
+  // Serial.print(color2[0]);
+  // Serial.print(",");
+  // Serial.print(color2[1]);
+  // Serial.print(",");
+  // Serial.print(color2[2]);
+  // Serial.print(" : ");
   return abs(color1[0] - color2[0]) < red_different && abs(color1[1] - color2[1]) < green_different && abs(color1[2] - color2[2]) < blue_different;
 }
 
@@ -81,6 +74,8 @@ void setup() { // run only once
 
 void loop() { // run repeatedly
   // Setting RED (R) filtered photodiodes to be read
+  test();
+  Serial.print("h");
   digitalWrite(S2,LOW);
   digitalWrite(S3,LOW);
   
@@ -138,9 +133,9 @@ void loop() { // run repeatedly
   if (started_counting) {
     if (colors_equels(tempColor, color)) {
       color_count++;
-      Serial.print("counting: ");
-      Serial.print(color_count);
-      Serial.print(" ");
+      // Serial.print("counting: ");
+      // Serial.print(color_count);
+      // Serial.print(" ");
     } else {
       color_count = 0;
       started_counting = false;
@@ -150,7 +145,7 @@ void loop() { // run repeatedly
   if (color_count > max_color_count) {
     j = 0;
     for (int j = 0; j < arrayLength; j++) {
-      Serial.print(" IN LOOP: ");
+      // Serial.print(" IN LOOP: ");
       if (colors_equels(colors[j], color)) {
         color_count = 0;
         started_counting = false;
@@ -180,19 +175,19 @@ void loop() { // run repeatedly
   }
 
   for (int i = 0; i < 3; i++) {
-    Serial.print(default_color[i]);
-    Serial.print(",");
+    // Serial.print(default_color[i]);
+    // Serial.print(",");
   }
-  Serial.print(" - ");
+  // Serial.print(" - ");
   for (int i = 0; i < arrayLength; i++) {
     for (int j = 0; j < 3; j++) {
-      Serial.print(colors[i][j]);
-      Serial.print(",");
+      // Serial.print(colors[i][j]);
+      // Serial.print(",");
     }
-    Serial.print(" ");
+    // Serial.print(" ");
   }
 
 
-  Serial.println();  
+  // Serial.println();  
 }
 
