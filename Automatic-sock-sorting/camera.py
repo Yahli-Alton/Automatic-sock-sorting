@@ -5,12 +5,7 @@ import serial
 import time
 PRECENT = 0.1
 COLOR_RANGE = 20
-
-COUNTS_FOR_SHORT = 5
-COUNTS_FOR_LONG = 5
-
-SHORT_MAX = 20 # px
-
+SHORT_MAX = 100 # px
 """
 arduino = serial.Serial(port='COM5', baudrate=9600, timeout=.1)
 def write_read(x):
@@ -56,10 +51,8 @@ def dominant_color():
     for color in dominant_colors[0]:
         return color
 
-def check_for_size():
-    short_counts = 0
-    long_counts = 0
-    vid = cv2.VideoCapture(0)
+if __name__ == "__main__":
+    vid = cv2.VideoCapture(1)
     while True:
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -100,28 +93,14 @@ def check_for_size():
             cv2.imshow("image", frame)
             continue
 
-
         # Find the largest contour (assuming it corresponds to the desired object)
         largest_contour = max(contours, key=lambda c: cv2.arcLength(c, True))
 
         # Find the bounding box of the object
         x, y, width, height = cv2.boundingRect(largest_contour)
 
-        print(width, height)
-
         # Draw a red rectangle around the object
         cv2.rectangle(frame, (x, y), (x + width, y + height), (0, 0, 255), 2)
-        if (width > SHORT_MAX): 
-            long_counts += 1
-            short_counts = 0
-        else:
-            short_counts += 1
-            long_counts = 0
-        
-        if (short_counts > COUNTS_FOR_SHORT): return 0 # short count
-        if (long_counts > COUNTS_FOR_LONG): return 1 # long count
-
-        return -1 # not found yet
 
         cv2.imshow("Mask Applied to Image", opened)
         cv2.imshow("image", frame)

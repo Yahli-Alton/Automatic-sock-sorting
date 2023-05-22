@@ -4,20 +4,21 @@
 #define S3 7
 #define sensorOut 8
 
-extern int const arrayLength = 7;
+int const arrayLength = 7;
 
 int const max_color_count = 3;
 
 int const red_different = 6;
 int const green_different = 4;
-int const blue_different = 3;
+int const blue_different = 4;
+
+int const different = 16;
 
 int redFrequency = 0; // The amount of red color
 int greenFrequency = 0; // The amount of green color
 int blueFrequency = 0; // the amount of blue color
 
 // create new array of length 5
-
 int colors[arrayLength][3];
 
 int color[3];
@@ -50,6 +51,10 @@ void set(int color1[3], int color2[3]) {
 boolean colors_equels(int color1[3], int color2[3]) {
   return abs(color1[0] - color2[0]) < red_different && abs(color1[1] - color2[1]) < green_different && abs(color1[2] - color2[2]) < blue_different;
 }
+
+// boolean colors_equels(int color1[3], int color2[3]) {
+//   return abs(color1[0] - color2[0]) + abs(color1[1] - color2[1]) + abs(color1[2] - color2[2]) < different;
+// }
 
 void Sensor_setup() { // run only once
   // Setting the outputs - set s0, s1, s2,s3 as the output of the colorsensor
@@ -94,7 +99,18 @@ int * getColor() {
   return color;
 }
 
+int getColors(int i, int j) {
+  return colors[i][j];
+}
+
 int check_for_sock() {
+  // Serial.print("! ");
+  // Serial.print(default_color[0]);
+  // Serial.print(", ");
+  // Serial.print(default_color[1]);
+  // Serial.print(", ");
+  // Serial.print(default_color[2]);
+  // Serial.print(" !");
   if (default_color[0] == 0) {
     set(default_color, color);
   }
