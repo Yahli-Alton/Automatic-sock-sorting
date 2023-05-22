@@ -4,7 +4,7 @@
 #define S3 7
 #define sensorOut 8
 
-int const arrayLength = 7;
+int const arrayLength = 5;
 
 int const max_color_count = 3;
 
@@ -12,7 +12,7 @@ int const red_different = 6;
 int const green_different = 4;
 int const blue_different = 4;
 
-int const different = 16;
+// int const different = 16;
 
 int redFrequency = 0; // The amount of red color
 int greenFrequency = 0; // The amount of green color
