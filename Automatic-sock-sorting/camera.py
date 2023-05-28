@@ -5,7 +5,14 @@ import serial
 import time
 PRECENT = 0.1
 COLOR_RANGE = 20
-SHORT_MAX = 100 # px
+SHORT_MIN = 0 # px
+SHORT_MAX = 300 # px
+LONG_MIN = SHORT_MAX # px
+LONG_MAX = 640 # px
+COUNTS = 10
+count = 0
+is_short = False
+MAX_PIXELS = 640
 """
 arduino = serial.Serial(port='COM5', baudrate=9600, timeout=.1)
 def write_read(x):
@@ -52,8 +59,10 @@ def dominant_color():
         return color
 
 def check_for_size():
+    global count
+    global is_short
     color = dominant_color()
-    print(color)
+    # print(color)
     mask = cv2.inRange(frame, np.array((color[0] - COLOR_RANGE,color[1] - COLOR_RANGE,color[2] - COLOR_RANGE)), np.array((color[0] + COLOR_RANGE,color[1] + COLOR_RANGE,color[2] + COLOR_RANGE)))
 
     edges = cv2.Canny(mask, 100, 200)
@@ -93,12 +102,36 @@ def check_for_size():
 
     # Find the bounding box of the object
     x, y, width, height = cv2.boundingRect(largest_contour)
+    print(width)
 
     # Draw a red rectangle around the object
     cv2.rectangle(frame, (x, y), (x + width, y + height), (0, 0, 255), 2)
 
     cv2.imshow("Mask Applied to Image", opened)
     cv2.imshow("image", frame)
+
+    if (width < SHORT_MAX and width > SHORT_MIN):
+        if (is_short): 
+            count += 1
+        else:
+            is_short = True
+            count = 1
+        print("short") #for debugging
+    if (width < LONG_MAX and width > LONG_MIN):
+        if (not is_short): 
+            count += 1
+        else:
+            is_short = False
+            count = 1
+        print("long")
+    if (count > COUNTS):
+        if (is_short):
+            print("SHORT")
+            return 1
+        else:
+            print("LONG")
+            return 0
+    return -1 # not found yet
 
 	# BGR
     # pink_mask = cv2.inRange(frame, (30, 30, 90), (90, 90, 255))
@@ -146,12 +179,12 @@ def check_for_size():
 
 
 if __name__ == '__main__':
-    vid = cv2.VideoCapture(1)
+    vid = cv2.VideoCapture(0)
     while True:
         ret, frame = vid.read()
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         x = check_for_size()
-        if (x != -1):
-            arduino = serial.Serial(port='COM5', baudrate=9600, timeout=.1)
-            arduino.write(bytes(x, 'utf-8'))
+        # if (x != -1):
+        #     arduino = serial.Serial(port='COM5', baudrate=9600, timeout=.1)
+        #     arduino.write(bytes(x, 'utf-8'))
