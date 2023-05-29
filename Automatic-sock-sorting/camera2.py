@@ -1,0 +1,1 @@
+# doing image recognition by using the default image instead of color
