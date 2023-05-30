@@ -10,13 +10,15 @@ int colors_size[arrayLength2][5];
 Servo bottomServo;
 Servo conveyerServo;
 Servo conveyerServo2;
+Servo picServo;
 
 void setup() {
   Sensor_setup();
   Serial.setTimeout(1);
-  bottomServo.attach(3);
-  conveyerServo.attach(9);
-    conveyerServo2.attach(11);
+  bottomServo.attach(12);
+  conveyerServo.attach(13);
+  picServo.attach(11);
+  // conveyerServo2.attach(11);
 
 
 
@@ -31,8 +33,9 @@ void loop() { // run repeatedly
     Serial.println(box);
     moveBox(box);
   }
-  conveyerServo.writeMicroseconds(2000);
-  conveyerServo2.writeMicroseconds(1000);
+  conveyerServo.writeMicroseconds(1000);
+  picServo.writeMicroseconds(2000);
+  // conveyerServo2.writeMicroseconds(1000);
 
   // if (Serial.available()) { // get the box from python
   //   x = Serial.readString().toInt();
