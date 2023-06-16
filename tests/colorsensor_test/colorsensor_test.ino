@@ -1,8 +1,8 @@
-#define S0 4
-#define S1 5
-#define S2 6
-#define S3 7
-#define sensorOut 8
+#define S0 7
+#define S1 8
+#define S2 5
+#define S3 4
+#define sensorOut 6
 
 
 int redFrequency = 0; // The amount of red color

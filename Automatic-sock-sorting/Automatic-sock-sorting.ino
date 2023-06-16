@@ -15,9 +15,9 @@ Servo picServo;
 void setup() {
   Sensor_setup();
   Serial.setTimeout(1);
-  bottomServo.attach(12);
+  bottomServo.attach(11);
   conveyerServo.attach(13);
-  picServo.attach(11);
+  picServo.attach(12);
   // conveyerServo2.attach(11);
 
 
@@ -28,12 +28,14 @@ void setup() {
 void loop() { // run repeatedly
   getColor();
   box = check_for_sock();
+  // Serial.println("hello");
   if (box != -1) {
     // call for servo_move(box);
     Serial.println(box);
     moveBox(box);
   }
-  conveyerServo.writeMicroseconds(1000);
+  
+  conveyerServo.writeMicroseconds(2000);
   picServo.writeMicroseconds(2000);
   // conveyerServo2.writeMicroseconds(1000);
 

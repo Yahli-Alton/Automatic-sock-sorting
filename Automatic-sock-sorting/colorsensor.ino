@@ -1,8 +1,8 @@
-#define S0 4
-#define S1 5
-#define S2 6
-#define S3 7
-#define sensorOut 8
+#define S0 7
+#define S1 8
+#define S2 5
+#define S3 4
+#define sensorOut 6
 
 int const arrayLength = 5;
 
@@ -129,9 +129,9 @@ int check_for_sock() {
   if (started_counting) {
     if (colors_equels(tempColor, color)) {
       color_count++;
-    //   Serial.print("counting: ");
-    //   Serial.print(color_count);
-    //   Serial.print(" ");
+      // Serial.print("counting: ");
+      // Serial.print(color_count);
+      // Serial.print(" ");
     } else {
       color_count = 0;
       started_counting = false;
